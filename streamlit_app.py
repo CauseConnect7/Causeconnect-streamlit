@@ -12,13 +12,13 @@ import os
 def get_api_url():
     if os.environ.get('RENDER_INTERNAL_HOSTNAME'):
         # Render环境中优先使用内部地址
-        return os.getenv('API_INTERNAL_URL', 'http://causeconnect-api:10000')
+        return os.getenv('API_INTERNAL_URL', 'http://causeconnect-streamlit:10000')
     elif os.environ.get('API_URL'):
         # 使用环境变量中配置的地址
         return os.environ.get('API_URL')
     else:
         # 本地开发环境
-        return "http://localhost:8000" 
+        return "https://causeconnect-streamlit.onrender.com" 
 
 API_URL = get_api_url()
 
