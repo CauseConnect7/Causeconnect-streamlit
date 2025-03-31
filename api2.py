@@ -15,9 +15,17 @@ load_dotenv()
 
 # 创建FastAPI应用
 app = FastAPI()
+
+# CORS设置
+allowed_origins = [
+    "https://causeconnect-streamlit.onrender.com",  # Streamlit公网地址
+    "http://causeconnect-streamlit:10000",          # Streamlit内部地址
+    "http://localhost:8501"                         # 本地开发时的Streamlit地址
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
