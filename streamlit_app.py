@@ -589,14 +589,6 @@ def initialize_session_state():
         if key not in st.session_state:
             st.session_state[key] = value
 
-    # 添加API URL检查
-    api_url = get_api_url()
-    if not api_url:
-        st.error("API URL未正确配置。请检查环境变量设置。")
-    elif os.environ.get('RENDER_INTERNAL_HOSTNAME'):
-        st.debug(f"使用内部API地址: {api_url}")
-    else:
-        st.debug(f"使用外部API地址: {api_url}")
 
 def show_introduction():
     # Title
