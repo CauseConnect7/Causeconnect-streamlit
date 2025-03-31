@@ -9,6 +9,43 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
 
+def get_api_url():
+    if os.environ.get('RENDER_INTERNAL_HOSTNAME'):
+        # Render环境中优先使用内部地址
+        return os.getenv('API_INTERNAL_URL', 'http://causeconnect-api:10000')
+    elif os.environ.get('API_URL'):
+        # 使用环境变量中配置的地址
+        return os.environ.get('API_URL')
+    else:
+        # 本地开发环境
+        return "http://localhost:8000" 
+
+API_URL = get_api_url()
+
+# API调用函数
+def call_api(endpoint, data=None):
+    try:
+        url = f"{API_URL}/{endpoint}"
+        if data:
+            response = requests.post(url, json=data)
+        else:
+            response = requests.get(url)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        st.error(f"API调用失败: {str(e)}")
+        return None
+
+# 使用示例
+def some_function():
+    try:
+        result = call_api("your_endpoint", {"some": "data"})
+        if result:
+            # 处理返回数据
+            st.write(result)
+    except Exception as e:
+        st.error(f"处理失败: {str(e)}")
+
 # 设置页面配置和主题
 st.set_page_config(
     page_title="Organization Matching Platform",
@@ -111,7 +148,7 @@ st.markdown("""
 
 def call_matching_api(input_data, algorithm_type):
     """调用匹配API"""
-    api_url = "http://localhost:8000/test/complete-matching-process"
+    api_url = f"{get_api_url()}/test/complete-matching-process"
     if algorithm_type == "simple":
         api_url += "-simple"
     
@@ -551,6 +588,15 @@ def initialize_session_state():
     for key, value in default_states.items():
         if key not in st.session_state:
             st.session_state[key] = value
+
+    # 添加API URL检查
+    api_url = get_api_url()
+    if not api_url:
+        st.error("API URL未正确配置。请检查环境变量设置。")
+    elif os.environ.get('RENDER_INTERNAL_HOSTNAME'):
+        st.debug(f"使用内部API地址: {api_url}")
+    else:
+        st.debug(f"使用外部API地址: {api_url}")
 
 def show_introduction():
     # Title
