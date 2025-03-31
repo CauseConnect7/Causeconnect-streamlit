@@ -78,9 +78,9 @@ services:
       
       # API Connection - 修改API连接配置
       - key: API_INTERNAL_URL
-        value: http://causeconnect-api:10000
+        value: http://causeconnect-streamlit :10000
       - key: API_URL
-        value: https://causeconnect-api.onrender.com
+        value: https://causeconnect-streamlit.onrender.com
       
       # 添加Python版本
       - key: PYTHON_VERSION
