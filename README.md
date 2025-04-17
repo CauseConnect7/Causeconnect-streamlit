@@ -51,6 +51,7 @@ source venv/bin/activate   # on Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 ###3. Create a .env File
+```bash
 OPENAI_API_KEY=your_openai_key
 MONGODB_URI=your_mongodb_uri
 MONGODB_DB_NAME=Organization5
@@ -63,7 +64,7 @@ PROMPT_TAGS_SYSTEM=...
 PROMPT_TAGS_USER=...
 MATCH_EVALUATION_SYSTEM_PROMPT=...
 MATCH_EVALUATION_PROMPT=...
-
+```
 ###4.Run the Backend
 ```bash
 uvicorn backend.main:app --reload --port 10000
@@ -113,7 +114,11 @@ Both APIs return JSON with the following structure:
 ```
 ## 📁 Folder Structure
 ```bash
-. ├── backend/ # FastAPI backend │ └── main.py ├── frontend/ # Streamlit frontend │ └── app.py ├── .env # Environment variables ├── requirements.txt # Python dependencies └── README.md
+. ├── backend/ # FastAPI backend
+│ └── main.py ├── frontend/ # Streamlit frontend
+│ └── app.py ├── .env # Environment variables
+├── requirements.txt # Python dependencies
+└── README.md
 
 ```
 ---
